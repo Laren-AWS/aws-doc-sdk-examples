@@ -1,0 +1,1 @@
+            <a href="#Client.DeleteContactList">func (c *Client) DeleteContactList(ctx context.Context, params *DeleteContactListInput, optFns ...func(*Options)) (*DeleteContactListOutput, error)</a></li>
