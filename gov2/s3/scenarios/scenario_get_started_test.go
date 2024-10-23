@@ -73,6 +73,7 @@ func (scenTest *GetStartedScenarioTest) SetupDataAndStubs() []testtools.Stub {
 	stubList = append(stubList, stubs.StubHeadBucket(
 		bucketName, &testtools.StubError{Err: &types.NotFound{}, ContinueAfter: true}))
 	stubList = append(stubList, stubs.StubCreateBucket(bucketName, testConfig.Region, nil))
+	stubList = append(stubList, stubs.StubHeadBucket(bucketName, nil))
 	stubList = append(stubList, stubs.StubPutObject(bucketName, objectKey, nil))
 	stubList = append(stubList, stubs.StubCreateMultipartUpload(bucketName, largeKey, uploadId, nil))
 	stubList = append(stubList, stubs.StubUploadPart(bucketName, largeKey, uploadId, nil))

@@ -6,7 +6,6 @@ package scenarios
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io"
 	"log"
 	"mime/multipart"
@@ -126,7 +125,11 @@ func sendMultipartRequest(url string, fields map[string]string, file *os.File, f
 func RunPresigningScenario(ctx context.Context, sdkConfig aws.Config, questioner demotools.IQuestioner, httpRequester IHttpRequester) {
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Printf("Something went wrong with the demo")
+			log.Println("Something went wrong with the demo.")
+			_, isMock := questioner.(*demotools.MockQuestioner)
+			if isMock || questioner.AskBool("Do you want to see the full error message (y/n)?", "y") {
+				log.Println(r)
+			}
 		}
 	}()
 

@@ -40,7 +40,11 @@ import (
 func RunGetStartedScenario(ctx context.Context, sdkConfig aws.Config, questioner demotools.IQuestioner) {
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("Something went wrong with the demo.\n", r)
+			log.Println("Something went wrong with the demo.")
+			_, isMock := questioner.(*demotools.MockQuestioner)
+			if isMock || questioner.AskBool("Do you want to see the full error message (y/n)?", "y") {
+				log.Println(r)
+			}
 		}
 	}()
 

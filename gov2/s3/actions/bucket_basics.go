@@ -11,6 +11,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/s3/manager"
@@ -89,8 +90,21 @@ func (basics BucketBasics) CreateBucket(ctx context.Context, name string, region
 		},
 	})
 	if err != nil {
-		log.Printf("Couldn't create bucket %v in Region %v. Here's why: %v\n",
-			name, region, err)
+		var owned *types.BucketAlreadyOwnedByYou
+		var exists *types.BucketAlreadyExists
+		if errors.As(err, &owned) {
+			log.Printf("You already own bucket %s.\n", name)
+			err = owned
+		} else if errors.As(err, &exists) {
+			log.Printf("Bucket %s already exists.\n", name)
+			err = exists
+		}
+	} else {
+		err = s3.NewBucketExistsWaiter(basics.S3Client).Wait(
+			ctx, &s3.HeadBucketInput{Bucket: aws.String(name)}, time.Minute)
+		if err != nil {
+			log.Printf("Failed attempt to wait for bucket %s to exist.\n", name)
+		}
 	}
 	return err
 }

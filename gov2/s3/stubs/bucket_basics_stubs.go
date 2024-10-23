@@ -35,8 +35,9 @@ func StubHeadBucket(bucketName string, raiseErr *testtools.StubError) testtools.
 		Input: &s3.HeadBucketInput{
 			Bucket: aws.String(bucketName),
 		},
-		Output: &s3.HeadBucketOutput{},
-		Error:  raiseErr,
+		Output:        &s3.HeadBucketOutput{},
+		Error:         raiseErr,
+		SkipErrorTest: true,
 	}
 }
 
