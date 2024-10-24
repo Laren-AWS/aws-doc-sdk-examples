@@ -3,6 +3,8 @@
 
 package scenarios
 
+// snippet-start:[gov2.s3.Scenario_GetStarted]
+
 import (
 	"context"
 	"crypto/rand"
@@ -16,8 +18,6 @@ import (
 	"github.com/awsdocs/aws-doc-sdk-examples/gov2/demotools"
 	"github.com/awsdocs/aws-doc-sdk-examples/gov2/s3/actions"
 )
-
-// snippet-start:[gov2.s3.Scenario_GetStarted]
 
 // RunGetStartedScenario is an interactive example that shows you how to use Amazon
 // Simple Storage Service (Amazon S3) to create an S3 bucket and use it to store objects.

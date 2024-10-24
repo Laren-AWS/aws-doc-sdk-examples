@@ -68,6 +68,16 @@ func StubPutObject(bucketName string, objectKey string, raiseErr *testtools.Stub
 	}
 }
 
+func StubHeadObject(bucketName string, objectKey string, raiseErr *testtools.StubError) testtools.Stub {
+	return testtools.Stub{
+		OperationName: "HeadObject",
+		Input:         &s3.HeadObjectInput{Bucket: aws.String(bucketName), Key: aws.String(objectKey)},
+		Output:        &s3.HeadObjectOutput{},
+		SkipErrorTest: true,
+		Error:         raiseErr,
+	}
+}
+
 func StubCreateMultipartUpload(bucketName string, objectKey string, uploadId string,
 	raiseErr *testtools.StubError) testtools.Stub {
 	return testtools.Stub{
@@ -171,16 +181,18 @@ func StubListObjectsV2(bucketName string, keys []string, raiseErr *testtools.Stu
 
 func StubDeleteObjects(bucketName string, keys []string, raiseErr *testtools.StubError) testtools.Stub {
 	var objectIds []types.ObjectIdentifier
+	var delObjs []types.DeletedObject
 	for _, key := range keys {
 		objectIds = append(objectIds, types.ObjectIdentifier{Key: aws.String(key)})
+		delObjs = append(delObjs, types.DeletedObject{Key: aws.String(key)})
 	}
 	return testtools.Stub{
 		OperationName: "DeleteObjects",
 		Input: &s3.DeleteObjectsInput{
 			Bucket: aws.String(bucketName),
-			Delete: &types.Delete{Objects: objectIds},
+			Delete: &types.Delete{Objects: objectIds, Quiet: aws.Bool(true)},
 		},
-		Output: &s3.DeleteObjectsOutput{},
+		Output: &s3.DeleteObjectsOutput{Deleted: delObjs},
 		Error:  raiseErr,
 	}
 }

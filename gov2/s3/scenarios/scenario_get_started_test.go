@@ -75,11 +75,13 @@ func (scenTest *GetStartedScenarioTest) SetupDataAndStubs() []testtools.Stub {
 	stubList = append(stubList, stubs.StubCreateBucket(bucketName, testConfig.Region, nil))
 	stubList = append(stubList, stubs.StubHeadBucket(bucketName, nil))
 	stubList = append(stubList, stubs.StubPutObject(bucketName, objectKey, nil))
+	stubList = append(stubList, stubs.StubHeadObject(bucketName, objectKey, nil))
 	stubList = append(stubList, stubs.StubCreateMultipartUpload(bucketName, largeKey, uploadId, nil))
 	stubList = append(stubList, stubs.StubUploadPart(bucketName, largeKey, uploadId, nil))
 	stubList = append(stubList, stubs.StubUploadPart(bucketName, largeKey, uploadId, nil))
 	stubList = append(stubList, stubs.StubUploadPart(bucketName, largeKey, uploadId, nil))
 	stubList = append(stubList, stubs.StubCompleteMultipartUpload(bucketName, largeKey, uploadId, []int32{1, 2, 3}, nil))
+	stubList = append(stubList, stubs.StubHeadObject(bucketName, largeKey, nil))
 	stubList = append(stubList, stubs.StubGetObject(bucketName, objectKey, nil, testBody, nil))
 	for i := 0; i < len(dnRanges)-2; i++ {
 		stubList = append(stubList, stubs.StubGetObject(bucketName, largeKey,
@@ -92,8 +94,13 @@ func (scenTest *GetStartedScenarioTest) SetupDataAndStubs() []testtools.Stub {
 		&testtools.StubError{Err: respErr, ContinueAfter: true}))
 	stubList = append(stubList, stubs.StubCopyObject(
 		bucketName, objectKey, bucketName, fmt.Sprintf("%v/%v", copyFolder, objectKey), nil))
+	stubList = append(stubList, stubs.StubHeadObject(bucketName, fmt.Sprintf("%v/%v", copyFolder, objectKey), nil))
 	stubList = append(stubList, stubs.StubListObjectsV2(bucketName, listKeys, nil))
 	stubList = append(stubList, stubs.StubDeleteObjects(bucketName, listKeys, nil))
+	for _, key := range listKeys {
+		stubList = append(stubList, stubs.StubHeadObject(bucketName, key,
+			&testtools.StubError{Err: &types.NotFound{}, ContinueAfter: true}))
+	}
 	stubList = append(stubList, stubs.StubDeleteBucket(bucketName, nil))
 
 	return stubList

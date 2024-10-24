@@ -3,6 +3,9 @@
 
 package actions
 
+// snippet-start:[gov2.s3.Presigner.complete]
+// snippet-start:[gov2.Presigner.struct]
+
 import (
 	"context"
 	"log"
@@ -12,9 +15,6 @@ import (
 	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
-
-// snippet-start:[gov2.s3.Presigner.complete]
-// snippet-start:[gov2.Presigner.struct]
 
 // Presigner encapsulates the Amazon Simple Storage Service (Amazon S3) presign actions
 // used in the examples.
