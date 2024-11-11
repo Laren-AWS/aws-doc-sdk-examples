@@ -1,0 +1,93 @@
+s3-directory-buckets_Hello:
+  title: Hello &S3; Directory Buckets
+  title_abbrev: Hello &S3; Directory Buckets
+  synopsis: get started using &S3; Directory buckets.
+  category: Hello
+  languages:
+    Python:
+      versions:
+        - sdk_version: 3
+          github: python/example_code/s3
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - python.example_code.s3.Hello
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/s3
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.s3.Hello
+  services:
+    s3-directory-buckets: {ListBuckets}
+s3-directory-buckets_CreateBucket:
+  languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/S3
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - S3.dotnetv3.S3_Basics-CreateBucket
+            - description: Create a bucket with object lock enabled.
+              snippet_tags:
+                - S3LockWorkflow.dotnetv3.CreateBucketWithObjectLock
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/s3
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - s3.cpp.create_bucket.code
+  services:
+    s3-directory-buckets: {CreateBucket}
+s3-directory-buckets_Scenario_ExpressBasics:
+  title: Testing learn the basics of Amazon S3 Express One Zone with an &AWS; SDK
+  title_abbrev: Testing learn the basics of S3 Express One Zone
+  synopsis_list:
+    - Set up a VPC and VPC Endpoint
+    - Set up the S3 Express Policies, Roles, and User to work with S3 Express buckets
+    - Create two S3 Clients
+    - Create two buckets
+    - Create an object and copy it over
+    - Demonstrate performance difference
+    - Populate the buckets to show the lexicographical difference
+    - Prompt the user to see if they want to clean up the resources
+  category: Basics
+  languages:
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/s3
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.s3.ExpressBasics
+                - php.example_code.s3.service.S3Service
+  services:
+    s3-directory-buckets: {CreateBucket, CopyObject, GetObject, PutObject, ListObjects, DeleteObject, DeleteBucket}
+s3-directory-buckets_Scenario_ObjectIntegrity:
+  title: Work with &S3; object integrity features using an &AWS; SDK
+  title_abbrev: Work with &S3; object integrity
+  synopsis: work with S3 object integrity features. This is just here for testing Directory Buckets separation, it's not really an S3 directory buckets example!
+  category: Scenarios
+  languages:
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/s3/s3_object_integrity_workflow
+          sdkguide:
+          excerpts:
+            - description: Run an interactive scenario demonstrating &S3; object integrity features.
+              snippet_tags:
+                - cpp.example_code.s3.Scenario_ObjectIntegrity
+  services:
+    s3-directory-buckets: {AbortMultipartUpload, CreateMultipartUpload, DeleteObject, GetObjectAttributes, PutObject, UploadPart, CompleteMultipartUpload}
